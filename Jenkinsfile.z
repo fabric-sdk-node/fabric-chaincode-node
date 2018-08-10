@@ -13,24 +13,6 @@ node('hyp-z') {
      env.PATH = "$GOROOT/bin:$PATH"
      def failure_stage = "none"
 // delete working directory
-     deleteDir()
-      stage("Fetch Patchset") { // fetch gerrit refspec on latest commit
-          try {
-              dir("${ROOTDIR}"){
-              sh '''
-                 [ -e gopath/src/github.com/hyperledger/fabric-chaincode-node ] || mkdir -p $PROJECT_DIR
-
-                 cd $PROJECT_DIR
-                 git clone https://github.com/rameshthoomu/$PROJECT
-                 git clone https://github.com/hyperledger/fabric && cd $PROJECT && git checkout master
-              '''
-              }
-          }
-          catch (err) {
-                 failure_stage = "Fetch patchset"
-                 throw err
-           }
-      }
 // clean environment and get env data
       stage("Clean Environment - Get Env Info") {
            try {
